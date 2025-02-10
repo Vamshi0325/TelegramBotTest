@@ -57,13 +57,11 @@ const Home = () => {
         ); // Wait until devtools and mobile checks are complete
     }
 
-    if (isDevToolsOpen || !isMobile) {
-        return <NotMobileDevice />; // Render fallback UI if devtools are open or not mobile
-    }
-
     return (
         <div style={{ background: "linear-gradient(to bottom, #000428, #004e92", width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            {isMobile && !isDevToolsOpen && (
+            {isDevToolsOpen && !isMobile ? (
+                <NotMobileDevice />
+            ) : (
                 <>
                     <h2>Welcome to the Homepage</h2>
                     <p>You are viewing this app on a mobile device.</p>
