@@ -3,22 +3,23 @@ import NotMobileDevice from './NotMobileDevice';
 import './App.css';
 
 const Home = () => {
-    // Start with null states to indicate "checking in progress"
+
     const [isMobile, setIsMobile] = useState(null);
-    const [isDevToolsOpen, setIsDevToolsOpen] = useState(null);
+    const [isDevToolsOpen, setIsDevToolsOpen] = useState(false); // Detect devtools
 
     useEffect(() => {
-        // DevTools detection logic
+        // Detect if devtools is open
         const detectDevTools = () => {
             const detect = setInterval(() => {
                 const threshold = 160;
                 const widthThreshold = window.outerWidth - window.innerWidth > threshold;
                 const heightThreshold = window.outerHeight - window.innerHeight > threshold;
 
+                // Check for devtools using debugger
                 let opened = false;
                 const devtoolsCheck = () => {
                     const start = performance.now();
-                    debugger; // This can affect performance if devtools are open
+                    debugger; // This will trigger extra execution time if devtools is open
                     const duration = performance.now() - start;
                     if (duration > 100) {
                         opened = true;
@@ -26,29 +27,26 @@ const Home = () => {
                 };
                 devtoolsCheck();
 
-                // If any condition matches, devtools are open; otherwise, they're not.
                 if (widthThreshold || heightThreshold || opened) {
                     setIsDevToolsOpen(true);
                     clearInterval(detect);
-                } else {
-                    setIsDevToolsOpen(false);
-                    clearInterval(detect);
                 }
             }, 450);
+
+            return () => clearInterval(detect);
         };
 
         detectDevTools();
     }, []);
 
     useEffect(() => {
-        // Only check for mobile if devtools are confirmed as not open
+        // Perform mobile check only after devtools check is complete
         if (isDevToolsOpen === false) {
             const mobile = /Android|iPhone/i.test(navigator.userAgent);
             setIsMobile(mobile);
         }
     }, [isDevToolsOpen]);
 
-    // Display a loader while we're still checking for devtools/mobile status
     if (isDevToolsOpen === null || (isDevToolsOpen === false && isMobile === null)) {
         return (
             <div style={{
@@ -57,31 +55,25 @@ const Home = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                color: 'white',
+                color: 'white'
             }}>
                 <div className="loader"></div>
             </div>
         );
     }
 
-    // If devtools are open or the device isn't mobile, show the fallback UI.
     if (isDevToolsOpen || !isMobile) {
-        return <NotMobileDevice />;
+        return <NotMobileDevice />; // Render fallback UI if devtools are open or not mobile
     }
 
-    // Otherwise, render your awesome mobile homepage.
     return (
-        <div style={{
-            background: "linear-gradient(to bottom, #000428, #004e92)",
-            width: '100%',
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <h2>Welcome to the Homepage</h2>
-            <p>You are viewing this app on a mobile device.</p>
+        <div style={{ background: "linear-gradient(to bottom, #000428, #004e92", width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            {isMobile ? (
+                <>
+                    <h2>Welcome to the Homepage</h2>
+                    <p>You are viewing this app on a mobile device.</p>
+                </>
+            ) : null}
         </div>
     );
 };
