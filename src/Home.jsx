@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import NotMobileDevice from './NotMobileDevice';
 import './App.css';
+import NotMobileDevice from './NotMobileDevice';
 
 const Home = () => {
 
@@ -31,7 +31,7 @@ const Home = () => {
                     setIsDevToolsOpen(true);
                     clearInterval(detect);
                 }
-            }, 450);
+            }, 460);
 
             return () => clearInterval(detect);
         };
