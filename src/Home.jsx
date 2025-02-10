@@ -3,72 +3,70 @@ import './App.css';
 import NotMobileDevice from './NotMobileDevice';
 
 const Home = () => {
-
+    // Initialize states as null so we know the checks are pending.
     const [isMobile, setIsMobile] = useState(null);
-    const [isDevToolsOpen, setIsDevToolsOpen] = useState(false); // Detect devtools
+    const [isDevToolsOpen, setIsDevToolsOpen] = useState(null);
 
     useEffect(() => {
-        // Detect if devtools is open
-        const detectDevTools = () => {
-            const detect = setInterval(() => {
-                const threshold = 160;
-                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        // Check for devtools presence at intervals.
+        let attempts = 0;
+        const detect = setInterval(() => {
+            attempts++;
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
 
-                // Check for devtools using debugger
-                let opened = false;
-                const devtoolsCheck = () => {
-                    const start = performance.now();
-                    debugger; // This will trigger extra execution time if devtools is open
-                    const duration = performance.now() - start;
-                    if (duration > 100) {
-                        opened = true;
-                    }
-                };
-                devtoolsCheck();
+            // Use a debugger call to simulate a check; delays may indicate devtools are open.
+            let opened = false;
+            const start = performance.now();
+            debugger; // If devtools are open, this might cause a noticeable delay.
+            const duration = performance.now() - start;
+            if (duration > 100) {
+                opened = true;
+            }
 
-                if (widthThreshold || heightThreshold || opened) {
-                    setIsDevToolsOpen(true);
-                    clearInterval(detect);
-                }
-            }, 460);
+            if (widthThreshold || heightThreshold || opened) {
+                setIsDevToolsOpen(true);
+                clearInterval(detect);
+            } else if (attempts >= 3) {
+                // After a few attempts (~1.5 seconds), assume devtools are closed.
+                setIsDevToolsOpen(false);
+                clearInterval(detect);
+            }
+        }, 500);
 
-            return () => clearInterval(detect);
-        };
-
-        detectDevTools();
+        return () => clearInterval(detect);
     }, []);
 
     useEffect(() => {
-        // Perform mobile check only after devtools check is complete
+        // Only check for mobile if we know devtools are closed.
         if (isDevToolsOpen === false) {
             const mobile = /Android|iPhone/i.test(navigator.userAgent);
             setIsMobile(mobile);
         }
     }, [isDevToolsOpen]);
 
+    // Display a centered loader while checks are pending.
     if (isDevToolsOpen === null || (isDevToolsOpen === false && isMobile === null)) {
         return (
-            <div style={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <div className="spinner-border text-primary" role="status">
+            <div className="loader-container">
+                <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
-        ); // Wait until devtools and mobile checks are complete
+        );
     }
 
+    // If devtools are open OR it's not a mobile device, show the fallback UI.
     if (isDevToolsOpen || !isMobile) {
-        return <NotMobileDevice />; // Render fallback UI if devtools are open or not mobile
+        return <NotMobileDevice />;
     }
 
+    // Only when devtools are closed AND the device is mobile, render the homepage.
     return (
-        <div style={{ background: "linear-gradient(to bottom, #000428, #004e92", width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            {isMobile && !isDevToolsOpen && (
-                <>
-                    <h2>Welcome to the Homepage</h2>
-                    <p>You are viewing this app on a mobile device.</p>
-                </>
-            )}
+        <div className="homepage">
+            <h2>Welcome to the Homepage</h2>
+            <p>You are viewing this app on a mobile device.</p>
         </div>
     );
 };
