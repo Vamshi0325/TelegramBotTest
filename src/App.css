@@ -9,7 +9,20 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px;
+    padding: 10px 20px 0;
     text-align: center;
     letter-spacing: 2px;
+    background: linear-gradient(to right, #ff0000 0%, #a86d00 50%, #889200 60%, #00923d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.253);
+}
+
+p {
+    width: 300px;
+    font-family: "Transformers Movie", sans-serif;
+    padding: 10px 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: rgb(139, 139, 139);
 }
