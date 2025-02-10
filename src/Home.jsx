@@ -48,7 +48,13 @@ const Home = () => {
     }, [isDevToolsOpen]);
 
     if (isDevToolsOpen === null || (isDevToolsOpen === false && isMobile === null)) {
-        return null; // Wait until devtools and mobile checks are complete
+        return (
+            <div style={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        ); // Wait until devtools and mobile checks are complete
     }
 
     if (isDevToolsOpen || !isMobile) {
