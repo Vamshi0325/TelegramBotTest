@@ -48,18 +48,7 @@ const Home = () => {
     }, [isDevToolsOpen]);
 
     if (isDevToolsOpen === null || (isDevToolsOpen === false && isMobile === null)) {
-        return (
-            <div style={{
-                width: '100%',
-                height: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'white'
-            }}>
-                <div className="loader"></div>
-            </div>
-        );
+        return null; // Wait until devtools and mobile checks are complete
     }
 
     if (isDevToolsOpen || !isMobile) {
