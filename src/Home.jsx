@@ -51,7 +51,7 @@ const Home = () => {
         return (
             <div className="loader-container">
                 <div className="spinner-border" role="status">
-                    <span className="visually-hidden" style={{ color: 'white', border: '3px solid white' }}>Loading...</span>
+                    <span className="visually-hidden" style={{ borderColor: 'white' }}>Loading...</span>
                 </div>
             </div>
         );

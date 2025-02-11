@@ -69,7 +69,7 @@
 /* Styling for h2 using the custom font */
 h2 {
     font-family: "Transformers Movie", sans-serif;
-    color: white;
+    color: white !important;
     display: flex;
     align-items: center;
     justify-content: center;
