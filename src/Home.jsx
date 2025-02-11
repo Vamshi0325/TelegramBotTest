@@ -57,14 +57,14 @@ const Home = () => {
         );
     }
 
-    // If devtools are open OR it's not a mobile device, show the fallback UI.
-    if (isDevToolsOpen || !isMobile) {
-        return <NotMobileDevice />;
-    }
+    // // If devtools are open OR it's not a mobile device, show the fallback UI.
+    // if (isDevToolsOpen || !isMobile) {
+    //     return <NotMobileDevice />;
+    // }
 
     // Only when devtools are closed AND the device is mobile, render the homepage.
     return (
-        <div className="homepage container text-center mt-4">
+        <div className="homepage container text-center">
             <h2>Welcome to the Homepage</h2>
             <p>You are viewing this app on a mobile device.</p>
             <ShareCopyButtons />
