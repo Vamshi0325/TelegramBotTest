@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import NotMobileDevice from './NotMobileDevice';
 import ShareCopyButtons from './ShareCopyButtons';
+import Photos from './Photos';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     // Initialize states as null so we know the checks are pending.
     const [isMobile, setIsMobile] = useState(null);
     const [isDevToolsOpen, setIsDevToolsOpen] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Check for devtools presence at intervals.
@@ -57,10 +60,10 @@ const Home = () => {
         );
     }
 
-    // If devtools are open OR it's not a mobile device, show the fallback UI.
-    if (isDevToolsOpen || !isMobile) {
-        return <NotMobileDevice />;
-    }
+    // // If devtools are open OR it's not a mobile device, show the fallback UI.
+    // if (isDevToolsOpen || !isMobile) {
+    //     return <NotMobileDevice />;
+    // }
 
     // Only when devtools are closed AND the device is mobile, render the homepage.
     return (
@@ -68,6 +71,7 @@ const Home = () => {
             <h2>Welcome to the Homepage</h2>
             <p>You are viewing this app on a mobile device.</p>
             <ShareCopyButtons />
+            <button onClick={() => navigate('/photos')} className="btn btn-primary mt-2">View Photos</button>
         </div>
     );
 };
