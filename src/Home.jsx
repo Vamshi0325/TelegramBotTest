@@ -57,10 +57,10 @@ const Home = () => {
         );
     }
 
-    // // If devtools are open OR it's not a mobile device, show the fallback UI.
-    // if (isDevToolsOpen || !isMobile) {
-    //     return <NotMobileDevice />;
-    // }
+    // If devtools are open OR it's not a mobile device, show the fallback UI.
+    if (isDevToolsOpen || !isMobile) {
+        return <NotMobileDevice />;
+    }
 
     // Only when devtools are closed AND the device is mobile, render the homepage.
     return (
