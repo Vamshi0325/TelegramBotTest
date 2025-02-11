@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
 const ShareCopyButtons = () => {
-    const url = "https://telegram-bot-test-inky.vercel.app";
+    const url = "https://telegram-bot-rosy-six.vercel.app";
 
     const handleShare = () => {
         if (navigator.share) {
