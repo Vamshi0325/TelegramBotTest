@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NotMobileDevice from './NotMobileDevice';
 import ShareCopyButtons from './ShareCopyButtons';
-import Photos from './Photos';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
