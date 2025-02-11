@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import NotMobileDevice from './NotMobileDevice';
+import ShareCopyButtons from './ShareCopyButtons';
 
 const Home = () => {
     // Initialize states as null so we know the checks are pending.
@@ -51,7 +51,7 @@ const Home = () => {
         return (
             <div className="loader-container">
                 <div className="spinner-border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden" style={{ color: 'white', border: '3px solid white' }}>Loading...</span>
                 </div>
             </div>
         );
@@ -64,9 +64,10 @@ const Home = () => {
 
     // Only when devtools are closed AND the device is mobile, render the homepage.
     return (
-        <div className="homepage">
+        <div className="homepage container text-center mt-4">
             <h2>Welcome to the Homepage</h2>
             <p>You are viewing this app on a mobile device.</p>
+            <ShareCopyButtons />
         </div>
     );
 };
